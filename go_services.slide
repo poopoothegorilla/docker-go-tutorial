@@ -1,0 +1,57 @@
+Go Development 101
+An Introduction to building a small service in Go
+09:30 11 Dec 2015
+Tags: docker, golang, service
+
+James Walker
+Engineer, Namely
+jim.walker@namely.com
+http://url/
+@twitter_name
+
+* Overview
+
+This Presentation will discuss
+- Using Docker as an IDE
+- Go's basics
+- Building a simple Go service
+- Using Docker for development and testing
+
+* What is Docker?
+
+  Docker allows you to package an application with all of its dependencies into
+  a standardized unit for software development.  
+.caption _Quote_ from [[https://www.docker.com/what-docker][Docker]]
+.image large_v-trans.png _ 500
+
+
+* Why use Docker?
+
+Benefits
+- Setup your code dependencies once
+- Can help speed up Developer Onboarding
+- Can help eliminate Developer environment issues
+
+ BUNDLED WITH
+ +   1.10.6
+
+* Using Docker for your IDE
+
+First Install Docker
+
+ brew update
+ brew upgrade
+ brew install docker docker-compose docker-machine
+.caption [[https://docs.docker.com/engine/installation/][Other Install Instructions]]
+
+This will install
+- *Docker* (Docker Engine): _creates_and_runs_containers_
+- *Docker-machine*: _container_management_
+- *Docker-compose*: _allows_you_to_define_multiple_container_applications_
+
+* Using Docker for your IDE
+
+Create your IDE Dockerfile
+
+
+
