@@ -49,9 +49,157 @@ This will install
 - *Docker-machine*: _container_management_
 - *Docker-compose*: _allows_you_to_define_multiple_container_applications_
 
-* Using Docker for your IDE
+* Creating a Dockerfile
 
-Create your IDE Dockerfile
+Create your Dockerfile
 
+ touch Dockerfile
 
+Declare the golang base image in the Dockerfile
+
+ FROM golang:1.5
+
+Declase base dependencies
+
+  RUN apt-get -q update && \
+    apt-get install --no-install-recommends -y --force-yes -q \
+      ca-certificates \
+      zsh \
+      curl \
+      git \
+      cmake \
+      vim \
+      && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+* Creating a Dockerfile
+
+Declare go tools
+
+  RUN go get github.com/nsf/gocode \
+            golang.org/x/tools/cmd/goimports \
+            github.com/rogpeppe/godef \
+            golang.org/x/tools/cmd/oracle \
+            golang.org/x/tools/cmd/gorename \
+            github.com/golang/lint/golint \
+            github.com/kisielk/errcheck \
+            github.com/jstemmer/gotags \
+            github.com/garyburd/go-explorer/src/getool
+
+Declare Pathogen
+
+  RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+      curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+Declare other Vim plugins
+
+  RUN git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree && \
+      git clone https://github.com/fatih/vim-go.git ~/.vim/bundle/vim-go
+
+* Creating a Dockerfile
+
+Make project folder and declare it as working directory
+
+  RUN mkdir /project
+  WORKDIR /project
+
+*BUT* what about our dot files?
+
+* Creating a Dockerfile
+
+Add the dotfiles to your IDE directory
+
+  cp ~/.zshrc zshrc
+  cp ~/.vimrc vimrc
+  cp ~/.vimrc vimrc.local
+
+Add the dotfiles to your dockerfile
+
+  ADD vimrc /root/.vimrc
+  ADD vimrc.local /root/.vimrc.local
+  ADD zshrc /root/.zshrc
+
+.link https://github.com/poopoothegorilla/go-box/blob/master/Dockerfile example code
+
+Now what?
+
+* Building and running a Docker Image
+
+Setup a virtual machine to run our container
+
+  docker-machine create gobox -d virtualbox
+
+Set that vm to active
+
+  eval $(docker-machine env go-ide)
+
+Build the image
+
+  docker build -t gobox .
+
+Now we can go to a project
+
+  docker run -v $(pwd):/project -ti gobox
+
+.link https://github.com/poopoothegorilla/go-box demo ide
+
+* Introduction to Go
+
+Brief Overview
+- Statically Typed
+- Garbage Collected
+- Simple design
+- Nice concurrency design
+- The Gopher (_designed_by_Renee_French_)
+
+.image gopher.png _ 300
+
+* Small Service
+
+.play helloworld.go
+
+* Add a simple client
+
+.play client.go
+
+* Docker again?
+
+Running this locally requires 4 things...
+- Server environment dependencies setup
+- Client environment dependencies setup
+- Server running
+- Client running
+
+Possible rails app...
+- Redis
+- Postgres
+- Rails
+- _Arnoldb_
+- _Postgres_for_Arnoldb_
+
+Docker-compose can help this situation
+
+* Docker-compose
+
+Create a docker-compose file
+
+  touch docker-compose.yml
+
+Setup docker-compose
+
+ server:
+  image: registry.company.tech/server:1001
+  port: 8080:8080
+
+ client:
+  build: .
+  dockerfile: Dockerfile-dev
+  environment:
+    SERVER_ADDR: server
+  links:
+    - server
+
+.link https://github.com/docker-library library of official docker images
+.link https://tour.golang.org/welcome/1 official golang tutorial
 
