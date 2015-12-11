@@ -6,14 +6,14 @@ Tags: docker, golang, service
 James Walker
 Engineer, Namely
 jim.walker@namely.com
-http://url/
-@twitter_name
+.link https://github.com/poopoothegorilla/docker-go-tutorial This tutorial
+.link https://github.com/docker-library library of official docker images
+.link https://tour.golang.org/welcome/1 official golang tutorial
 
 * Overview
 
 This Presentation will discuss
 - Using Docker as an IDE
-- Go's basics
 - Building a simple Go service
 - Using Docker for development and testing
 
@@ -200,6 +200,28 @@ Setup docker-compose
   links:
     - server
 
-.link https://github.com/docker-library library of official docker images
-.link https://tour.golang.org/welcome/1 official golang tutorial
+* Start the Dev environment
+
+Same Process as before
+
+  docker-machine create hello-dev -d virtualbox
+  eval $(docker-machine env hello-dev)
+
+Then use docker-compose to run both the containers
+
+  docker-compose up
+
+* Go and Docker
+
+Why Go and Docker go together...
+- Docker is built in Go
+- Go binaries are extremely easy to deploy
+
+Arnoldb's Docker-build file
+
+  FROM scratch
+
+  ADD arnoldb /arnoldb
+  CMD ["/arnoldb"]
+
 
