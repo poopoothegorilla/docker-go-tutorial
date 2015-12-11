@@ -6,9 +6,9 @@ Tags: docker, golang, service
 James Walker
 Engineer, Namely
 jim.walker@namely.com
-.link https://github.com/poopoothegorilla/docker-go-tutorial This tutorial
-.link https://github.com/docker-library library of official docker images
-.link https://tour.golang.org/welcome/1 official golang tutorial
+https://github.com/poopoothegorilla/docker-go-tutorial
+https://github.com/docker-library
+https://tour.golang.org/welcome/1
 
 * Overview
 
@@ -132,15 +132,15 @@ Setup a virtual machine to run our container
 
 Set that vm to active
 
-  eval $(docker-machine env go-ide)
+  eval $(docker-machine env gobox)
 
 Build the image
 
-  docker build -t gobox .
+  docker build -t go-ide .
 
 Now we can go to a project
 
-  docker run -v $(pwd):/project -ti gobox
+  docker run -v $(pwd):/project -ti go-ide
 
 .link https://github.com/poopoothegorilla/go-box demo ide
 
