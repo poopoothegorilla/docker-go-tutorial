@@ -15,4 +15,4 @@ RUN go get golang.org/x/tools/cmd/present
 COPY . /presentation
 WORKDIR /presentation
 
-RUN present
+CMD present
